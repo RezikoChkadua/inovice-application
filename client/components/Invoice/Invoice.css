@@ -1,0 +1,21 @@
+.center-col-verticaly > div[class*="col"]{
+    display: flex;
+    align-items: center;
+}
+
+.margin-top{
+    margin-top: 10px;
+}
+
+.margin-left{
+    margin-left: 10px;
+}
+
+.flex-end{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.collapse{
+    width: 100% !important;
+}

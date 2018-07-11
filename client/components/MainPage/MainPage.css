@@ -1,0 +1,12 @@
+.MainPage{
+    width: 100%;
+}
+
+.MainPage .card{
+    padding: 10px 0;
+}
+
+.MainPage button{
+    /* margin-top: 10px; */
+}
+

@@ -1,0 +1,37 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/bin/yarn add express
+
+PATH: 
+  /home/reziko/bin:/home/reziko/.local/bin:/home/reziko/bin:/home/reziko/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+
+Yarn version: 
+  1.7.0
+
+Node version: 
+  10.5.0
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: getaddrinfo EAI_AGAIN registry.yarnpkg.com registry.yarnpkg.com:443
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:50:26)
+
+npm manifest: 
+  {
+    "name": "invoices-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "reziko",
+    "license": "ISC"
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

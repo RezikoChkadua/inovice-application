@@ -40,7 +40,6 @@ const mutations = new GraphQLObjectType({
                 return (new User({ age, username, email, created, activated })).save()
             }
         },
-
         createInvoice: {
             type: invoiceType,
             args: {
@@ -71,7 +70,7 @@ const mutations = new GraphQLObjectType({
                 userId: { type: GraphQLID },
             },
             resolve(parentValue, { _id, name, date, created, modified, description, contactName, address, userId }) {
-                return Invoice.findByIdAndUpdate(_id, { name, date, created, modified, description, contactName, address, userId }, { new: true })
+                return Invoice.findByIdAndUpdate(_id, { name, date, created, modified, description, contactName, address, userId })
             }
         },
         deleteInvoice: {

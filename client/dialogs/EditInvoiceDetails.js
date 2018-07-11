@@ -6,7 +6,7 @@ import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
 import query from "../queryes/fetchInvoiceDetailsByInvoiceId";
 
-class EditInvoice extends Component {
+class EditInvoiceDetails extends Component {
 
     constructor(props) {
         super(props)
@@ -74,17 +74,20 @@ class EditInvoice extends Component {
     }
 }
 
-const mutation = gql`
-    mutation editInvoiceDetails($_id:ID, $name: String,  $desctiption: String, $quantity: Number, $price: Number, $total:Number){
-        editInvoiceDetails(_id:$_id, name:$name,description:$description, quantity:$quantity, price: $price,total:$total)
-               {
-                     name
-               }
-      }
-`;
+
+export default EditInvoiceDetails
+
+// const mutation = gql`
+//     mutation editInvoiceDetails($_id:ID, $name: String,  $desctiption: String, $quantity: Number, $price: Number, $total:Number){
+//         editInvoiceDetails(_id:$_id, name:$name,description:$description, quantity:$quantity, price: $price,total:$total)
+//                {
+//                      name
+//                }
+//       }
+// `;
 
 
-export default compose(
-    // graphql(query, { options: (props) => { return { variables: { id: props.invoiceId } } } }),
-    graphql(mutation)
-)(EditInvoice)
+// export default compose(
+//     graphql(query, { options: (props) => { return { variables: { id: props.invoiceId } } } }),
+//     graphql(mutation)
+// )(EditInvoice)

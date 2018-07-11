@@ -6,6 +6,8 @@ import {
 import moment from 'moment'
 import './Invoice.css'
 import EditInvoiceDetails from '../../dialogs/EditInvoiceDetails';
+import gql from 'graphql-tag'
+
 class Invoice extends Component {
 
     constructor() {
@@ -15,6 +17,7 @@ class Invoice extends Component {
             editInvoiceDetailsModal: false
         }
     }
+
     handleDetailsCollapse = () => {
         this.setState({ detailsCollapse: !this.state.detailsCollapse })
     }
@@ -27,9 +30,9 @@ class Invoice extends Component {
 
     }
     handleInvoiceDetailsModal = () => {
-
         this.setState({ editInvoiceDetailsModal: !this.state.editInvoiceDetailsModal })
     }
+
     render() {
         const { _id, name, contactName, date, description, address, modified, } = this.props.Invoices
         const { handleEditInvoice, handleInvoiceDelete } = this.props
@@ -133,9 +136,9 @@ class Invoice extends Component {
     }
 }
 
-const mutation = gql`
-                editInvoiceDetails(_id: ID,name: String,description: String,quantity: Int,price: Int,total: Int,userId: ID,invoiceId: ID)
-`;
+// const mutation = gql`
+//                 editInvoiceDetails(_id: ID,name: String,description: String,quantity: Int,price: Int,total: Int,userId: ID,invoiceId: ID)
+// `;
 
 
 export default Invoice

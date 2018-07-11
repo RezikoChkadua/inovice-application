@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
 import {
     Button, Card, CardBody, CardTitle, Row, Col,
-    Form, FormGroup, Label, Input, Container, Navbar,
-    Nav, NavItem, NavbarBrand, Badge, ListGroup, ListGroupItem, CardText,
-    Modal, ModalHeader, ModalBody, ModalFooter, Collapse
+    Container, Navbar, Badge, ListGroup,
+    Modal, ModalHeader, ModalBody,
 } from 'reactstrap';
 
 import { CreateInvoice } from "../../dialogs";
 import { EditInvoice } from "../../dialogs";
 
-import moment from 'moment'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 import query from "../../queryes/fetchInvoices";

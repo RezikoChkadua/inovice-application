@@ -1,21 +1,7 @@
-.center-col-verticaly > div[class*="col"]{
-    display: flex;
-    align-items: center;
+.invoice{
+    width: 70%;
 }
 
-.margin-top{
-    margin-top: 10px;
-}
-
-.margin-left{
-    margin-left: 10px;
-}
-
-.flex-end{
-    display: flex;
-    justify-content: flex-end;
-}
-
-.collapse{
-    width: 100% !important;
+.invoice .card {
+    width:100%;
 }

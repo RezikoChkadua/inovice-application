@@ -1,3 +1,5 @@
 export { default as CreateInvoice } from './CreateInvoice'
 export { default as EditInvoice } from './EditInvoice'
 export { default as InvoiceDetails } from './InvoiceDetails'
+export { default as EditInvoiceDetails } from './EditInvoiceDetails'
+export { default as CreateInvoiceDetails } from './CreateInvoiceDetail'

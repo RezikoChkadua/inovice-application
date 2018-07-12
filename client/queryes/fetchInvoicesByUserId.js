@@ -1,17 +1,15 @@
 import gql from 'graphql-tag'
 
 export default gql`
-    {
-        getInvoices {
+    query getInvoicesByUserId($id: ID){
+            getInvoicesByUserId(id:$id){
             _id
             name
             date
-            created
-            modified
             description
             contactName
-            address
-            userId
-        }
-    }
+            contactName
+            userId       
+  }
+}    
 `;

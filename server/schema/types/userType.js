@@ -13,16 +13,10 @@ const userType = new GraphQLObjectType({
     fields: () => ({
         id: { type: GraphQLID },
         username: { type: GraphQLString },
+        password: { type: GraphQLString },
         email: { type: GraphQLString },
         created: { type: GraphQLString },
         activated: { type: GraphQLString },
-        invoices: {
-            type: new GraphQLList(invoiceType),
-            resolve(parent, args) {
-                return Invoices.filter(x => x.id === parent.userId)
-            }
-        }
-
     })
 })
 

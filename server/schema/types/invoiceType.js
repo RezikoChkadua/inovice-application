@@ -18,13 +18,7 @@ const invoiceType = new GraphQLObjectType({
         description: { type: GraphQLString },
         contactName: { type: GraphQLString },
         address: { type: GraphQLString },
-        userId: { type: GraphQLID },
-        invoiceDetails: {
-            type: invoiceDetailsType,
-            resolve(parentValue) {
-                return invoiceDetails.findById(parentValue._id)
-            }
-        }
+        userId: { type: GraphQLID }
     })
 })
 

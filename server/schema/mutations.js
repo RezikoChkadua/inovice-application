@@ -24,7 +24,9 @@ const mutations = new GraphQLObjectType({
                 username: { type: GraphQLString },
                 password: { type: GraphQLString },
             },
-            resolve() { }
+            resolve(parent, { username, password }) {
+                return User.findOne({ $and: [{ username }, { password }] })
+            }
         },
         signup: {
             type: userType,
@@ -32,12 +34,11 @@ const mutations = new GraphQLObjectType({
                 username: { type: GraphQLString },
                 password: { type: GraphQLString },
                 email: { type: GraphQLString },
-                age: { type: GraphQLInt },
                 created: { type: GraphQLString },
                 activated: { type: GraphQLString }
             },
-            resolve(parentValue, { age, username, email, created, activated }) {
-                return (new User({ age, username, email, created, activated })).save()
+            resolve(parentValue, { username, email, password, created, activated }) {
+                return (new User({ username, email, password, created, activated })).save()
             }
         },
         createInvoice: {
@@ -82,6 +83,7 @@ const mutations = new GraphQLObjectType({
                 return Invoice.find({ _id }).remove()
             }
         },
+
         createInvoiceDetails: {
             type: invoiceDetailsType,
             args: {
@@ -111,7 +113,7 @@ const mutations = new GraphQLObjectType({
                 invoiceId: { type: GraphQLID }
             },
             resolve(parentValue, { _id, name, description, quantity, price, total, userId, invoiceId }) {
-                return InvoiceDetails.findOneAndUpdate(_id, { name, description, quantity, price, total, userId, invoiceId }).save()
+                return InvoiceDetails.findByIdAndUpdate(_id, { name, description, quantity, price, total, userId, invoiceId })
             }
         },
         deleteInvoiceDetails: {
@@ -119,7 +121,7 @@ const mutations = new GraphQLObjectType({
             args: {
                 _id: { type: GraphQLID }
             },
-            resolve({ _id, }) {
+            resolve(parent, { _id }) {
                 return InvoiceDetails.find({ _id }).remove()
             }
         }

@@ -1,0 +1,27 @@
+.center-col-verticaly > div[class*="col"]{
+    display: flex;
+    align-items: center;
+}
+
+.invoice-list a{
+    text-decoration: none;
+}
+
+
+
+.margin-top{
+    margin-top: 10px;
+}
+
+.margin-left{
+    margin-left: 10px;
+}
+
+.flex-end{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.collapse{
+    width: 100% !important;
+}

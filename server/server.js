@@ -19,6 +19,7 @@ app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: true
 }))
+app.use(express.static(path.join(__dirname, 'client')));
 
 app.use(webpackMiddleware(webpack(webpackConfig)));
 export default app

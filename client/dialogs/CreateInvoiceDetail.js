@@ -3,25 +3,23 @@ import { browserHistory } from 'react-router';
 import { Form, FormGroup, Label, Input, FormText, Button } from 'reactstrap'
 import moment from 'moment'
 import gql from 'graphql-tag'
-import { graphql, compose } from 'react-apollo'
+import { graphql } from 'react-apollo'
 import query from "../queryes/fetchInvoiceDetailsByInvoiceId";
 
-class EditInvoiceDetails extends Component {
+class CreateInvoiceDetails extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            _id: '',
             name: '',
-            description: "",
-            quantity: '',
+            desctiption: "",
+            quantity: "",
             price: '',
-            total: ''
+            total: '',
         }
     }
 
     handleChange = (event) => {
-        console.log(this.state)
         this.setState({ [event.target.name]: event.target.value })
         if (event.target.name === "quantity" || event.target.name === "price") {
             setTimeout(() => {
@@ -34,31 +32,26 @@ class EditInvoiceDetails extends Component {
         this.setState({ total: this.state.price * this.state.quantity })
     }
 
-    handleDetailsUpdate = (e) => {
-        console.log(this.state)
-        e.preventDefault()
-        const { _id, name, description, quantity, price, total } = this.state
-        this.props.mutate({
-            variables: {
-                _id, name, description, quantity, price, total, invoiceId: this.props.invoiceDetails.invoiceId
-            }, refetchQueries: [{ query }]
-        })
-        this.props.handleModal();
-        this.props.refetchDetails();
+    handleCreateInvoiceDetails = () => {
+
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-            const { _id, name, quantity, price, total, description } = this.props.invoiceDetails
-            this.setState({ _id, name, quantity, price, total, description })
-        }, 1000);
+    handleCreateDetails = (e) => {
+        e.preventDefault()
+        const { name, description, quantity, price, total } = this.state
+        this.props.mutate({
+            variables: {
+                name, description, quantity, price, total, invoiceId: this.props.invoiceId
+            }
+        })
+        this.props.handleModal();
+        this.props.refetch();
     }
 
     render() {
-        const { name, description, quantity, price, total } = this.props.invoiceDetails
         return (
             <div className="create-invoice" >
-                <Form onSubmit={this.handleEditInvoiceDetails}>
+                <Form onSubmit={this.handleCreateInvoiceDetails}>
                     <FormGroup>
                         <Label for="name">Name</Label>
                         <Input type="text" name="name" placeholder="name" value={this.state.name ? this.state.name : ''} onChange={this.handleChange} />
@@ -80,23 +73,20 @@ class EditInvoiceDetails extends Component {
                         <Input type="text" name="total" placeholder="total" readOnly value={this.state.total ? this.state.total : ''} onChange={this.handleChange} />
                     </FormGroup>
 
-                    <Button color="primary" onClick={this.handleDetailsUpdate}>Edit</Button>{' '}
+                    <Button color="primary" onClick={this.handleCreateDetails}>Create</Button>{' '}
                     <Button color="secondary" onClick={this.props.handleModal}>Cancel</Button>
                 </Form>
-            </div >
+            </div>
         )
     }
 }
 
-
 const mutation = gql`
-    mutation editInvoiceDetails($_id:ID, $name: String, $invoiceId:ID $description: String, $quantity: Int, $price:Int, $total:Int){
-        editInvoiceDetails(_id:$_id, name:$name, invoiceId:$invoiceId,description:$description, quantity:$quantity, price: $price,total:$total)
-               {
-                     name
-               }
+  mutation createInvoiceDetails( $name: String, $invoiceId:ID, $description: String, $quantity: Int, $price:Int, $total:Int){
+      createInvoiceDetails( name:$name, invoiceId:$invoiceId, description:$description, quantity:$quantity, price: $price,total:$total){
+        name
       }
+   }
 `;
 
-
-export default graphql(mutation)(EditInvoiceDetails)
+export default graphql(mutation)(CreateInvoiceDetails)

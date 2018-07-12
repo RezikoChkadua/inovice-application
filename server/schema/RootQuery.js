@@ -32,14 +32,14 @@ const RootQuery = new GraphQLObjectType({
             type: new GraphQLList(invoiceType),
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return Invoice.findById(args.id)
+                return Invoice.find({ 'userId': args.id })
             }
         },
         getInvoiceDetailsByInvoiceId: {
             type: new GraphQLList(invoiceDetailsType),
             args: { id: { type: GraphQLID } },
             resolve(parent, args) {
-                return InvoiceDetails.find({ 'invoiceId': args.id })
+                return InvoiceDetails.find({ 'invoiceId': args.id });
             }
         }
     }

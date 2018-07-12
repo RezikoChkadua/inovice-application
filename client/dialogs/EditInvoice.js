@@ -31,7 +31,7 @@ class EditInvoice extends Component {
         e.preventDefault()
         const { name, description, contactName, address, date } = this.state
         this.props.mutate({ variables: { _id: this.props.invoiceId, name, description, contactName, address, date } })
-        this.props.toggleEditInvoice()
+        this.props.toggleEditInvoice(e)
         this.props.data.refetch()
     }
 
@@ -58,7 +58,7 @@ class EditInvoice extends Component {
                         <Label for="description">Desctiption</Label>
                         <Input type="text" name="description" placeholder="description" value={this.state.description ? this.state.description : ''} onChange={this.handleChange} />
                     </FormGroup>
-                    <FormGroup>.
+                    <FormGroup>
                         <Label for="contactName">Contact Name</Label>
                         <Input type="text" name="contactName" placeholder="contactName" value={this.state.contactName ? this.state.contactName : ''} onChange={this.handleChange} />
                     </FormGroup>

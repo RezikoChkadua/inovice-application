@@ -9,10 +9,10 @@ import { CreateInvoice } from "../../dialogs";
 import { EditInvoice } from "../../dialogs";
 
 import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
-import query from "../../queryes/fetchInvoices";
+import { graphql, compose } from 'react-apollo'
+import query from "../../queryes/fetchInvoicesByUserId";
 
-import Invoice from "../Invoice/Invoice";
+import InvoiceList from "../Invoice-List/InvoiceList";
 import './MainPage.css'
 class MainPage extends Component {
     constructor(props) {
@@ -45,9 +45,14 @@ class MainPage extends Component {
         this.setState({ editInvoiceModal: !this.state.editInvoiceModal })
     }
 
+    handleRefetch = () => {
+        this.props.data.refetch()
+    }
+
 
     render() {
-        const { getInvoices, loading } = this.props.data
+        console.log(this.props.data, 'this.props.data')
+        const { getInvoicesByUserId, loading } = this.props.data
         if (loading) return <div> Loading... </div>
         return (
             <div className="MainPage">
@@ -60,27 +65,27 @@ class MainPage extends Component {
                                         <Container>
                                             <Row>
                                                 <Navbar color="light" light expand="md">
-                                                    <h4> <Badge color="secondary">UserName</Badge> </h4>
+                                                    <h4> <Badge color="secondary"></Badge> </h4>
                                                     {/* <NavbarToggler onClick={this.toggle} /> */}
                                                 </Navbar>
                                             </Row>
                                         </Container>
                                     </CardTitle>
                                     <ListGroup>
-
-                                        {
-                                            getInvoices.map(invoice => {
+                                        {getInvoicesByUserId &&
+                                            getInvoicesByUserId.map(invoice => {
+                                                console.log(invoice, 'invoice')
                                                 return (
-                                                    <Invoice
+                                                    <InvoiceList
                                                         key={invoice._id}
                                                         Invoices={invoice}
+                                                        refetch={this.props.data.refetch}
                                                         handleEditInvoice={this.handleEditInvoice}
                                                         handleInvoiceDelete={this.handleInvoiceDelete}
                                                     />
                                                 )
                                             })
                                         }
-
                                     </ListGroup>
                                 </Col>
                             </Row>
@@ -100,7 +105,11 @@ class MainPage extends Component {
                 <Modal isOpen={this.state.addInvoiceModal} toggle={this.toggle} className={this.props.className}>
                     <ModalHeader toggle={this.toggle}>Create Invoice</ModalHeader>
                     <ModalBody>
-                        <CreateInvoice handleInvoiceModal={this.handleInvoiceModal} />
+                        <CreateInvoice
+                            userId={this.props.match.params.id}
+                            handleInvoiceModal={this.handleInvoiceModal}
+                            refetch={this.handleRefetch}
+                        />
                     </ModalBody>
                 </Modal>
 
@@ -117,14 +126,15 @@ class MainPage extends Component {
 
 
 const mutation = gql`
-    mutation deleteInvoice($id: ID) {
-        deleteInvoice(_id: $id) {
-            _id
+    mutation deleteInvoice($_id: ID) {
+        deleteInvoice(_id: $_id) {
+            id
        }
     }
 `;
 
-export default graphql(mutation)(
-    graphql(query)(MainPage)
-)
+export default compose(
+    graphql(mutation),
+    graphql(query, { options: (props) => { return { variables: { id: props.match.params.id } } } }),
+)(MainPage)
 

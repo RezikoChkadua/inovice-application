@@ -23,15 +23,12 @@ class CreateInvoice extends Component {
         this.setState({ [event.target.name]: event.target.value })
     }
 
-    // handleInvoiceDetailsCreation = () => {
-
-    // }
-
     handleInvoiceCreation = (e) => {
         e.preventDefault()
         const { name, description, contactName, address, date } = this.state
-        this.props.mutate({ variables: { name, description, contactName, address, date }, refetchQueries: [{ query }] })
+        this.props.mutate({ variables: { name, description, contactName, address, date, userId: this.props.userId } })
         this.props.handleInvoiceModal()
+        this.props.refetch()
     }
 
     render() {
@@ -69,14 +66,16 @@ class CreateInvoice extends Component {
 }
 
 const mutation = gql`
-    mutation createInvoice($name:String, $description:String, $contactName:String, $address:String, $date:String ) {
-        createInvoice(name: $name,
+    mutation createInvoice($name:String, $description:String, $contactName:String, $address:String, $date:String ,$userId:ID) {
+        createInvoice(
+                      name: $name,
                       date:$date,
                       description: $description,
                       contactName:$contactName,
-                      address:$address)
+                      address:$address,
+                      userId: $userId )
                        {
-                _id
+                name
         }
     }
 `;

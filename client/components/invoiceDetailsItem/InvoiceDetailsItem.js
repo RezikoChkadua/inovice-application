@@ -11,6 +11,7 @@ import { graphql } from 'react-apollo'
 
 import { EditInvoiceDetails } from "../../dialogs";
 
+import Delete from "../../assets/svg/Delete";
 import './InvoiceDetailsItem.css'
 class InvoiceDetailsItem extends Component {
 
@@ -31,55 +32,48 @@ class InvoiceDetailsItem extends Component {
     handleInvoiceDetailDelete = () => {
         this.props.mutate({
             variables: { _id: this.props.details._id }
-        })
-        this.props.refetchDetails()
+        }).then(() => this.props.refetchDetails())
     }
 
     handleChange = event => {
-        this.handleModal()
+        this.setState({ modal: !this.state.modal })
     }
-    handleModal = () => {
+
+    handleModal = (e) => {
+        e.preventDefault()
         this.setState({ modal: !this.state.modal })
     }
 
     render() {
         const { _id, invoiceId, name, description, quantity, price, total } = this.props.details
         return (
-            <tr>
-                <td>
-                    <FormGroup>
-                        <Input type="name" name="name" placeholder="Name" value={name ? name : ""} onChange={this.handleChange} />
-                    </FormGroup>
-                </td>
-                <td>
-                    <FormGroup>
-                        <Input type="Description" name="Description" placeholder="Description" value={description ? description : ""} onChange={this.handleChange} />
-                    </FormGroup>
-                </td>
-                <td>
-                    <FormGroup>
-                        <Input type="Quantity" name="Quantity" placeholder="Quantity" value={quantity ? quantity : ""} onChange={this.handleChange} />
-                    </FormGroup>
-                </td>
-                <td>
-                    <FormGroup>
-                        <Input type="Price" name="Price" placeholder="Price" value={price ? price : ""} onChange={this.handleChange} />
-                    </FormGroup>
-                </td>
-                <td>
-                    <FormGroup>
-                        <Input type="Total" name="Total" placeholder="Total" value={total ? total : ""} onChange={this.handleChange} />
-                    </FormGroup>
-                </td>
-                <td>
-                    <Button color="danger" onClick={this.handleInvoiceDetailDelete}>delete</Button>
-                </td>
+            <div className="invoice-details-list-item">
+                <div className="invoice-list-item-col">
+                    <input className="input-style" type="name" name="name" placeholder="Name" value={name ? name : ""} onChange={this.handleChange} />
+                </div>
+                <div className="invoice-list-item-col">
+                    <input className="input-style" type="Description" name="Description" placeholder="Description" value={description ? description : ""} onChange={this.handleChange} />
+                </div>
+                <div className="invoice-list-item-col">
+                    <input className="input-style" type="Quantity" name="Quantity" placeholder="Quantity" value={quantity ? quantity : ""} onChange={this.handleChange} />
+                </div>
+                <div className="invoice-list-item-col">
+                    <input className="input-style" type="Price" name="Price" placeholder="Price" value={price ? price : ""} onChange={this.handleChange} />
+                </div>
+                <div className="invoice-list-item-col">
+                    <input className="input-style" type="Total" name="Total" placeholder="Total" value={total ? total : ""} onChange={this.handleChange} />
+                </div>
+                <div className="invoice-list-item-col">
+                    <div onClick={this.handleInvoiceDetailDelete}>
+                        <Delete />
+                    </div>
+                </div>
                 <Modal isOpen={this.state.modal} >
                     <ModalBody>
                         <EditInvoiceDetails refetchDetails={this.props.refetchDetails} invoiceDetails={this.props.details} handleModal={this.handleModal} />
                     </ModalBody>
                 </Modal>
-            </tr>
+            </div >
         )
     }
 }
@@ -87,12 +81,12 @@ class InvoiceDetailsItem extends Component {
 
 const mutation = gql`
     mutation deleteInvoiceDetails($_id:ID){
-        deleteInvoiceDetails(_id: $_id)
+                    deleteInvoiceDetails(_id: $_id)
                {
-                     name
-               }
-      }
-`;
+                    name
+                }
+                }
+          `;
 
 export default graphql(mutation)(InvoiceDetailsItem)
 

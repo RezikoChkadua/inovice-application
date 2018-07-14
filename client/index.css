@@ -1,9 +1,10 @@
+@import url('https://fonts.googleapis.com/css?family=Chela+One|Roboto+Slab');
+
 html,body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
 }
 
 
@@ -12,5 +13,89 @@ html,body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ececec;
+  background:#EBEDF1;
+}
+
+.formGroup{
+  width: 80%
+}
+
+.input-style{
+  border: none;
+  background: transparent;
+  border-bottom:  3px dashed #9E9EAE;
+  font-family: 'Roboto Slab';
+  color: #9E9EAE !important;
+  font-size: 18px;
+}
+
+.input-style:-webkit-autofill{
+  -webkit-box-shadow: 0 0 0 30px white inset;
+/* !important; */
+  -webkit-text-fill-color: #9E9EAE ;
+
+}
+
+.input-style:focus{
+  outline: none;
+  color: #9E9EAE !important;
+}
+
+
+
+
+
+/* dialog */
+.invoice-modal .formGroup{
+  width: 100% !important;
+  margin-top: 50px;
+
+}
+
+.invoice-modal-header{
+  width: 100%;
+  text-align: left;
+  color: #6D6E85;
+  font-family: 'Chela One', cursive !important;
+  border-bottom: 1px solid #6D6E85;
+}
+
+.invoice-modal input{
+  width: 100%;
+}
+
+.invoice-modal{
+
+}
+
+
+.dialog-btns{
+  margin-top: 20px
+}
+
+.approve-btn{
+  width: 80px;
+  height: 40px;
+  background: #33CABB;
+  font-family: 'Roboto Slab', cursive;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  color: #ffffff;
+  font-weight: bold;
+  transition: 1s;
+  margin-right: 10px;
+}
+
+.cancel-btn{
+  width: 80px;
+  height: 40px;
+  background: #ec5a5a;
+  font-family: 'Roboto Slab', cursive;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+  color: #ffffff;
+  font-weight: bold;
+  transition: 1s;
 }

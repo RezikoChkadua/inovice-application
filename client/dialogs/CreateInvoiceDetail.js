@@ -43,39 +43,40 @@ class CreateInvoiceDetails extends Component {
             variables: {
                 name, description, quantity, price, total, invoiceId: this.props.invoiceId
             }
-        })
-        this.props.handleModal();
-        this.props.refetch();
+        }).then(() => {
+            this.props.refetch()
+            this.props.handleModal(e);
+        });
     }
 
     render() {
         return (
-            <div className="create-invoice" >
-                <Form onSubmit={this.handleCreateInvoiceDetails}>
-                    <FormGroup>
-                        <Label for="name">Name</Label>
-                        <Input type="text" name="name" placeholder="name" value={this.state.name ? this.state.name : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="description">Desctiption</Label>
-                        <Input type="text" name="description" placeholder="description" value={this.state.description ? this.state.description : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="quantity">Quantity</Label>
-                        <Input type="text" name="quantity" placeholder="quantity" value={this.state.quantity ? this.state.quantity : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="price">price</Label>
-                        <Input type="price" name="price" placeholder="price" value={this.state.price ? this.state.price : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="total">Total</Label>
-                        <Input type="text" name="total" placeholder="total" readOnly value={this.state.total ? this.state.total : ''} onChange={this.handleChange} />
-                    </FormGroup>
+            <div className="invoice-modal" >
+                <div className="invoice-modal-header">
+                    <h2>Create Invoice Detail</h2>
+                </div>
+                <form onSubmit={this.handleCreateDetails}>
 
-                    <Button color="primary" onClick={this.handleCreateDetails}>Create</Button>{' '}
-                    <Button color="secondary" onClick={this.props.handleModal}>Cancel</Button>
-                </Form>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="name" placeholder="name" value={this.state.name ? this.state.name : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="description" placeholder="description" value={this.state.description ? this.state.description : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="quantity" placeholder="quantity" value={this.state.quantity ? this.state.quantity : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="price" name="price" placeholder="price" value={this.state.price ? this.state.price : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="total" placeholder="total" readOnly value={this.state.total ? this.state.total : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup dialog-btns">
+                        <button className="approve-btn">Create</button>{' '}
+                        <button className="cancel-btn" onClick={() => this.props.handleModal(e)}>Cancel</button>
+                    </div>
+                </form>
             </div>
         )
     }
@@ -83,10 +84,10 @@ class CreateInvoiceDetails extends Component {
 
 const mutation = gql`
   mutation createInvoiceDetails( $name: String, $invoiceId:ID, $description: String, $quantity: Int, $price:Int, $total:Int){
-      createInvoiceDetails( name:$name, invoiceId:$invoiceId, description:$description, quantity:$quantity, price: $price,total:$total){
-        name
-      }
-   }
-`;
+                    createInvoiceDetails(name: $name, invoiceId:$invoiceId, description:$description, quantity:$quantity, price: $price,total:$total){
+                    name
+                }
+                }
+             `;
 
 export default graphql(mutation)(CreateInvoiceDetails)

@@ -1,4 +1,59 @@
-.invoice{
-    width: 70%;
-    
+.invoice-details{
+    width:70%;
+    font-family: 'Roboto Slab', cursive;
+    margin-top: 20px;
+}
+
+.invoice-details-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.invoice-details-list-header{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 5px;
+}   
+
+.invoice-details-list-col{
+    flex:1 0 50px;
+}
+
+
+.add-invoice-details{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #33CABB;
+    font-family: 'Roboto Slab', cursive;
+    border: 0;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    color: #ffffff;
+    font-weight: bold;
+    transition: 1s;
+    border-radius: 100%;
+    margin-top: 10px;
+}
+
+.invoice-details-list-footer{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items:  flex-end;
+    flex-direction: column
+}
+
+.invoice-total{
+    margin-top: 15px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: #6D6E85;
+    font-family: 'Chela One', cursive !important;
+    font-size: 26px;
 }

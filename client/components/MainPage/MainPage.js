@@ -11,6 +11,7 @@ import { EditInvoice } from "../../dialogs";
 import gql from 'graphql-tag'
 import { graphql, compose } from 'react-apollo'
 import query from "../../queryes/fetchInvoicesByUserId";
+import Plus from "../../assets/svg/Plus";
 
 import InvoiceList from "../Invoice-List/InvoiceList";
 import './MainPage.css'
@@ -30,7 +31,9 @@ class MainPage extends Component {
             .then(() => this.props.data.refetch())
     }
 
-    handleInvoiceModal = () => {
+    handleAddInvoiceModal = (e) => {
+        // e.persist()
+        e.preventDefault()
         this.setState({ addInvoiceModal: !this.state.addInvoiceModal })
     }
 
@@ -51,70 +54,55 @@ class MainPage extends Component {
 
 
     render() {
-        console.log(this.props.data, 'this.props.data')
         const { getInvoicesByUserId, loading } = this.props.data
         if (loading) return <div> Loading... </div>
         return (
             <div className="MainPage">
-                <Card>
-                    <CardBody>
-                        <Container>
-                            <Row>
-                                <Col>
-                                    <CardTitle>
-                                        <Container>
-                                            <Row>
-                                                <Navbar color="light" light expand="md">
-                                                    <h4> <Badge color="secondary"></Badge> </h4>
-                                                    {/* <NavbarToggler onClick={this.toggle} /> */}
-                                                </Navbar>
-                                            </Row>
-                                        </Container>
-                                    </CardTitle>
-                                    <ListGroup>
-                                        {getInvoicesByUserId &&
-                                            getInvoicesByUserId.map(invoice => {
-                                                console.log(invoice, 'invoice')
-                                                return (
-                                                    <InvoiceList
-                                                        key={invoice._id}
-                                                        Invoices={invoice}
-                                                        refetch={this.props.data.refetch}
-                                                        handleEditInvoice={this.handleEditInvoice}
-                                                        handleInvoiceDelete={this.handleInvoiceDelete}
-                                                    />
-                                                )
-                                            })
-                                        }
-                                    </ListGroup>
-                                </Col>
-                            </Row>
-                            <Row className="margin-top">
-                                <Col>
-                                    <Button outline color="primary" onClick={this.handleInvoiceModal}>
-                                        Add Invoice
-                                    </Button>{' '}
-                                </Col>
-                            </Row>
-                        </Container>
-                    </CardBody >
-                </Card >
+                <div className="mainPage-header">
+                    <h2>Invoice List</h2>
+                </div>
+                <div className="invoice-list-table">
+                    <div className="invoice-list-header">
+                        <div className="invoice-list-col">NAME</div>
+                        <div className="invoice-list-col">CONTACT-NAME</div>
+                        <div className="invoice-list-col">DATE</div>
+                        <div className="invoice-list-col">DESCRIPTION</div>
+                        <div className="invoice-list-col">ADDRESS</div>
+                        <div className="invoice-list-col"></div>
+                    </div>
+
+                    {getInvoicesByUserId &&
+                        getInvoicesByUserId.map(invoice => {
+                            return (
+                                <InvoiceList
+                                    key={invoice._id}
+                                    Invoices={invoice}
+                                    refetch={this.props.data.refetch}
+                                    handleEditInvoice={this.handleEditInvoice}
+                                    handleInvoiceDelete={this.handleInvoiceDelete}
+                                />
+                            )
+                        })
+                    }
+                </div>
+                <div className="mainPage-footer">
+                    <button className="add-invoice" onClick={this.handleAddInvoiceModal}>
+                        <Plus />
+                    </button>{' '}
+                </div>
 
                 {/* Modals */}
-
-                <Modal isOpen={this.state.addInvoiceModal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Create Invoice</ModalHeader>
+                <Modal isOpen={this.state.addInvoiceModal} toggle={this.toggle} className={this.props.className} >
                     <ModalBody>
                         <CreateInvoice
                             userId={this.props.match.params.id}
-                            handleInvoiceModal={this.handleInvoiceModal}
+                            handleAddInvoiceModal={this.handleAddInvoiceModal}
                             refetch={this.handleRefetch}
                         />
                     </ModalBody>
                 </Modal>
 
                 <Modal isOpen={this.state.editInvoiceModal} toggle={this.toggle} className={this.props.className}>
-                    <ModalHeader toggle={this.toggle}>Edit Invoice</ModalHeader>
                     <ModalBody>
                         <EditInvoice invoiceId={this.state.invoiceEditId} toggleEditInvoice={this.toggleEditInvoice} />
                     </ModalBody>
@@ -127,11 +115,11 @@ class MainPage extends Component {
 
 const mutation = gql`
     mutation deleteInvoice($_id: ID) {
-        deleteInvoice(_id: $_id) {
-            id
-       }
-    }
-`;
+                    deleteInvoice(_id: $_id) {
+                    id
+                }
+                }
+            `;
 
 export default compose(
     graphql(mutation),

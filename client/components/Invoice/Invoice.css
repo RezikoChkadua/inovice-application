@@ -1,7 +1,41 @@
 .invoice{
-    width: 70%;
+    min-width: 850px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 10px 6px -6px #777;
 }
 
-.invoice .card {
-    width:100%;
+.invoice-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    color: #6D6E85;
+    font-family: 'Chela One', cursive !important;
+}
+
+.invoice-header span{
+    color:#b4b5cc;
+    margin-left: 5px;
+}
+
+.invoice-fileds{
+    width: 100%;
+}
+
+.invoice-field{
+    font-family: 'Roboto Slab', cursive;
+    font-weight: bold;
+    color:#4a4a4a;
+    margin-top: 10px;
+}
+
+.invoice-field span{
+    color: #8e87ab;
+    margin-right: 5px;
 }

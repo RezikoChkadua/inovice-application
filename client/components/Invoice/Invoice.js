@@ -25,25 +25,32 @@ class Invoice extends Component {
         const { loading } = this.props.data
         if (loading) return <div> Loading... </div>
 
-        const { name, address, contactName, date, description, modified } = this.props.data.getInvoiceById
+        const { _id, name, address, contactName, date, description, modified } = this.props.data.getInvoiceById
         return (
             <div className="invoice">
-                <Card>
-                    <CardBody>
-                        <Container>
-                            <Row>
-                                <Col sm="2">Name: {name}</Col>
-                                <Col sm="2">Adress: {address}</Col>
-                                <Col sm="2">Contact: Name{contactName}</Col>
-                                <Col sm="2">Date: {moment(date).format('YYYY-MM-DD')}</Col>
-                                <Col sm="2">Description: {description}</Col>
-                            </Row>
-                            <Row>
-                                <InvoiceDetails invoiceId={this.props.match.params.id} />
-                            </Row>
-                        </Container>
-                    </CardBody>
-                </Card>
+                <div className="invoice-header">
+                    <h2>Invoice  </h2>{' '}<span> :{_id}</span>
+                </div>
+                <div className="invoice-fileds">
+                    <div className="invoice-field">
+                        <span> Name: </span>{name}
+
+                    </div>
+                    <div className="invoice-field">
+                        <span> Adress: </span>{address}
+                    </div>
+                    <div className="invoice-field">
+                        <span> Contact Name:</span>{contactName}
+                    </div>
+                    <div className="invoice-field">
+                        <span> Date: </span>{moment(date).format('YYYY-MM-DD')}
+                    </div>
+                    <div className="invoice-field">
+                        <span> Description: </span>{description}
+                    </div>
+
+                </div>
+                <InvoiceDetails invoiceId={this.props.match.params.id} />
             </div>
         )
     }

@@ -42,35 +42,32 @@ class Registration extends Component {
     render() {
         const { username, password, email } = this.state
         return (
-            <div className="Registration" >
-                <Row>
-                    <Col>
-                        <Card body>
-                            <CardBody>
-                                <CardTitle>Registration</CardTitle>
-                                <Form onSubmit={this.handleSignUp}>
-                                    <FormGroup>
-                                        <Label for="username">Uername</Label>
-                                        <Input type="text" name="username" placeholder="username" value={username} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="password">Password</Label>
-                                        <Input type="password" name="password" placeholder="password" value={password} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="email">Email</Label>
-                                        <Input type="email" name="email" placeholder="email" value={email} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <Link to="/">
-                                        <Button color="danger">Back</Button>
-                                    </Link>
-                                    {' '}
-                                    <Button color="primary">Register</Button>
-                                </Form>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+            <div className="registration" >
+
+                <form onSubmit={this.handleSignUp}>
+                    <div className="form-header">
+                        <h2>Invoice App</h2>
+                    </div>
+                    <div className="formGroup">
+                        {/* <label for="username">Uername</label> */}
+                        <input className="input-style" type=" text" name="username" placeholder="username" value={username} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        {/* <label for="password">Password</label> */}
+                        <input className="input-style" type="password" name="password" placeholder="password" value={password} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        {/* <label for="email">Email</label> */}
+                        <input className="input-style" type="email" name="email" placeholder="email" value={email} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup registration-btns">
+                        <button className="registration-btn">Register</button>
+                        <Link to="/">
+                            <button className="back-btn">Back</button>
+                        </Link>
+                        {' '}
+                    </div>
+                </form>
             </div >
         )
     }
@@ -79,11 +76,11 @@ class Registration extends Component {
 
 const mutation = gql`
    mutation signup($username: String, $password:String, $email: String) {
-        signup(username:$username, password:$password, email:$email) {
-            id
-        }
-    }
-
-`;
+                    signup(username: $username, password:$password, email:$email) {
+                    id
+                }
+                }
+            
+            `;
 
 export default graphql(mutation)(Registration)

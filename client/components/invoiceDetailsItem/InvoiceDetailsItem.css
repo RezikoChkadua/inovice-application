@@ -1,0 +1,16 @@
+.invoice-details-list-item{
+    display: flex;   
+}
+
+.invoice-list-item-col{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex:1 0 50px;
+    margin: 15px 10px 0  0;
+}
+
+.invoice-list-item-col input{
+    width: 100% !important;
+}
+

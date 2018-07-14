@@ -30,8 +30,7 @@ class EditInvoice extends Component {
     handleInvoiceEdit = (e) => {
         e.preventDefault()
         const { name, description, contactName, address, date } = this.state
-        this.props.mutate({ variables: { _id: this.props.invoiceId, name, description, contactName, address, date } })
-        this.props.data.refetch()
+        this.props.mutate({ variables: { _id: this.props.invoiceId, name, description, contactName, address, date } }).then(() => this.props.data.refetch())
         this.props.toggleEditInvoice()
     }
 

@@ -7,6 +7,7 @@ import {
 
 import fetchInvoiceDetailsByInvoiceId from "../../queryes/fetchInvoiceDetailsByInvoiceId";
 import { graphql, compose } from 'react-apollo'
+import Plus from "../../assets/svg/Plus";
 
 import InvoiceDetailsItem from "../invoiceDetailsItem/InvoiceDetailsItem";
 import { CreateInvoiceDetails } from "../../dialogs";
@@ -17,70 +18,79 @@ class InvoiceDetails extends Component {
         super(props)
         this.state = {
             invoiceDetails: '',
-            modal: false
+            modal: false,
+            total: 0
         }
     }
 
     refetchDetails = () => {
         this.props.data.refetch()
+        this.forceUpdate()
     }
 
-    handleModal = () => {
+    handleModal = (e) => {
+        e.preventDefault()
         this.setState({ modal: !this.state.modal })
     }
 
+    handleTotal = () => {
+        this.state.total({ total: '' })
+    }
 
     render() {
+        this.state.total = 0
         const { getInvoiceDetailsByInvoiceId } = this.props.data
         const { loading } = this.props.data
         if (loading) return <div>Loading...</div>
         return (
-            <Card>
-                <CardBody>
-                    <Container>
-                        <Row>
-                            <Col>
-                                <CardTitle>
-                                    Invoice
-                            </CardTitle>
-                                <CardBody>
-                                    <Form>
-                                        <Table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Description</th>
-                                                    <th>Quantity</th>
-                                                    <th>Price</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {
-                                                    getInvoiceDetailsByInvoiceId.map(details =>
-                                                        <InvoiceDetailsItem refetchDetails={this.refetchDetails} key={details._id} details={details} />
-                                                    )
-                                                }
-                                            </tbody>
-                                        </Table>
-                                    </Form>
-                                </CardBody>
-                            </Col>
-                        </Row>
-                    </Container>
-                    <Button color="primary" onClick={this.handleModal}>Add Detail</Button>
+            <div className="invoice-details">
+                <div className="invoice-details-list">
+                    <div className="invoice-details-list-header">
+                        <div className="invoice-details-list-col">
+                            Name
+                        </div>
+                        <div className="invoice-details-list-col">
+                            Description
+                        </div>
+                        <div className="invoice-details-list-col">
+                            Quantity
+                        </div>
+                        <div className="invoice-details-list-col">
+                            Price
+                        </div>
+                        <div className="invoice-details-list-col">
+                            Total
+                        </div>
+                        <div className="invoice-details-list-col"></div>
 
-                </CardBody>
-                <Modal isOpen={this.state.modal} >
-                    <ModalBody>
-                        <CreateInvoiceDetails
-                            invoiceId={this.props.invoiceId}
-                            handleModal={this.handleModal}
-                            refetch={this.props.data.refetch}
-                        />
-                    </ModalBody>
-                </Modal>
-            </Card >
+                    </div>
+                    {getInvoiceDetailsByInvoiceId &&
+                        getInvoiceDetailsByInvoiceId.map(details => {
+                            this.state.total += details.total
+                            return <InvoiceDetailsItem handleTotal={this.handleTotal} refetchDetails={this.refetchDetails} key={details._id} details={details} />
+                        })
+                    }
+                    <div className="invoice-details-list-footer">
+                        <div className="add-invoice-details" onClick={this.handleModal}>
+                            <Plus />
+                        </div>
+                        <div className="invoice-total" onClick={this.handleModal}>
+                            <span>TOTAL : {this.state.total}</span>
+                        </div>
+                    </div>
+
+
+                    <Modal isOpen={this.state.modal} >
+                        <ModalBody>
+                            <CreateInvoiceDetails
+                                invoiceId={this.props.invoiceId}
+                                handleModal={this.handleModal}
+                                refetch={this.props.data.refetch}
+                            />
+                        </ModalBody>
+                    </Modal>
+                </div>
+            </div>
         )
     }
 }

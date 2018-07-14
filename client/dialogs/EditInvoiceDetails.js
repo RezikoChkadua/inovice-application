@@ -21,7 +21,6 @@ class EditInvoiceDetails extends Component {
     }
 
     handleChange = (event) => {
-        console.log(this.state)
         this.setState({ [event.target.name]: event.target.value })
         if (event.target.name === "quantity" || event.target.name === "price") {
             setTimeout(() => {
@@ -35,16 +34,17 @@ class EditInvoiceDetails extends Component {
     }
 
     handleDetailsUpdate = (e) => {
-        console.log(this.state)
         e.preventDefault()
         const { _id, name, description, quantity, price, total } = this.state
         this.props.mutate({
             variables: {
                 _id, name, description, quantity, price, total, invoiceId: this.props.invoiceDetails.invoiceId
             }, refetchQueries: [{ query }]
+        }).then(() => {
+            this.props.refetchDetails()
+            this.props.handleModal(e);
         })
-        this.props.handleModal();
-        this.props.refetchDetails();
+
     }
 
     componentDidMount() {
@@ -57,33 +57,36 @@ class EditInvoiceDetails extends Component {
     render() {
         const { name, description, quantity, price, total } = this.props.invoiceDetails
         return (
-            <div className="create-invoice" >
-                <Form onSubmit={this.handleEditInvoiceDetails}>
-                    <FormGroup>
-                        <Label for="name">Name</Label>
-                        <Input type="text" name="name" placeholder="name" value={this.state.name ? this.state.name : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="description">Desctiption</Label>
-                        <Input type="text" name="description" placeholder="description" value={this.state.description ? this.state.description : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="quantity">Quantity</Label>
-                        <Input type="text" name="quantity" placeholder="quantity" value={this.state.quantity ? this.state.quantity : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="price">price</Label>
-                        <Input type="price" name="price" placeholder="price" value={this.state.price ? this.state.price : ''} onChange={this.handleChange} />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="total">Total</Label>
-                        <Input type="text" name="total" placeholder="total" readOnly value={this.state.total ? this.state.total : ''} onChange={this.handleChange} />
-                    </FormGroup>
+            <div className="invoice-modal" >
+                <div className="invoice-modal-header">
+                    <h2>Edit Invoice</h2>
+                </div>
+                <form onSubmit={this.handleDetailsUpdate}>
 
-                    <Button color="primary" onClick={this.handleDetailsUpdate}>Edit</Button>{' '}
-                    <Button color="secondary" onClick={this.props.handleModal}>Cancel</Button>
-                </Form>
-            </div >
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="name" placeholder="name" value={this.state.name ? this.state.name : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="description" placeholder="description" value={this.state.description ? this.state.description : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="quantity" placeholder="quantity" value={this.state.quantity ? this.state.quantity : ''} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <input className="input-style" type="price" name="price" placeholder="price" value={this.state.price ? this.state.price : ''} onChange={this.handleChange} />
+                    </div>
+
+                    <div className="formGroup">
+                        <input className="input-style" type="text" name="total" placeholder="total" readOnly value={this.state.total ? this.state.total : ''} onChange={this.handleChange} />
+                    </div>
+
+                    <div className="formGroup dialog-btns">
+                        <button color="primary" className="approve-btn">Edit</button>{' '}
+                        <button color="secondary" className="cancel-btn" onClick={this.props.handleModal}>Cancel</button>
+                    </div>
+                </form>
+            </div>
+
         )
     }
 }
@@ -91,12 +94,12 @@ class EditInvoiceDetails extends Component {
 
 const mutation = gql`
     mutation editInvoiceDetails($_id:ID, $name: String, $invoiceId:ID $description: String, $quantity: Int, $price:Int, $total:Int){
-        editInvoiceDetails(_id:$_id, name:$name, invoiceId:$invoiceId,description:$description, quantity:$quantity, price: $price,total:$total)
+                    editInvoiceDetails(_id: $_id, name:$name, invoiceId:$invoiceId,description:$description, quantity:$quantity, price: $price,total:$total)
                {
-                     name
-               }
-      }
-`;
+                    name
+                }
+                }
+          `;
 
 
 export default graphql(mutation)(EditInvoiceDetails)

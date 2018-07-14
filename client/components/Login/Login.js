@@ -41,31 +41,29 @@ class Login extends Component {
         const { username, password } = this.state
         return (
             <div className="Login">
-                <Row>
-                    <Col>
-                        <Card body>
-                            <CardBody>
-                                <CardTitle>Invoice App</CardTitle>
-                                <Form onSubmit={this.handleLogin}>
-                                    <FormGroup>
-                                        <Label for="username">Username</Label>
-                                        <Input type="text" name="username" placeholder="username" value={username} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <FormGroup>
-                                        <Label for="password">Password</Label>
-                                        <Input type="password" name="password" placeholder="password" value={password} onChange={this.handleChange} />
-                                    </FormGroup>
-                                    <Button color="primary">Login</Button>
-                                    {' '}
-                                    <Link to="/registration">
-                                        <Button color="primary">Register</Button>
-                                    </Link>
-                                </Form>
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
+                <form onSubmit={this.handleLogin}>
+                    <div className="form-header">
+                        <h2>Invoice App</h2>
+                    </div>
+                    <div className="formGroup">
+                        {/* <label htmlFor="username">Username</label> */}
+                        <input autoComplete="off" className="input-style" type="text" name="username" placeholder="username" value={username} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        {/* <label htmlFor="password">Password</label> */}
+                        <input autoComplete="off" className="input-style" type="password" name="password" placeholder="password" value={password} onChange={this.handleChange} />
+                    </div>
+                    <div className="formGroup">
+                        <button className="login-btn">Login</button>
+                        {' '}
+                    </div>
+                    <div className="form-footer">
+                        <Link to="/registration">
+                            <p> Registration </p>
+                        </Link>
+                    </div>
 
+                </form>
             </div >
         )
     }
@@ -73,11 +71,11 @@ class Login extends Component {
 
 const mutation = gql`
     mutation login($username: String, $password:String){
-        login(username:$username, password:$password) {
-            id
-        }
-}
-`
+                    login(username: $username, password:$password) {
+                    id
+                }
+                }
+                `
 
 
 export default graphql(mutation)(Login)

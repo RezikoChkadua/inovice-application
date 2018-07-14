@@ -8,8 +8,9 @@ export default gql`
             date
             description
             contactName
-            contactName
+            address
             userId       
+
   }
 }    
 `;
